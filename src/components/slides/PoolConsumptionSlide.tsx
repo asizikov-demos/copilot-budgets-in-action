@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Meter, PromptMessage, StepButton, UserConsumption } from '../ui';
 
 export function PoolConsumptionSlide() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -24,36 +25,26 @@ export function PoolConsumptionSlide() {
       <div className="pool-visualization" aria-label="Shared AI Credits pool">
         <div className="pool-row">
           <span className="token-label">Shared Pool</span>
-          <div className="pool-bar" aria-label={`Shared Pool contains ${remainingPool} AICs`}>
-            <span className="pool-fill" style={{ width: `${remainingPoolPercent}%` }} />
-            <span className="pool-value">{remainingPool} AICs</span>
-          </div>
+          <Meter
+            ariaLabel={`Shared Pool contains ${remainingPool} AICs`}
+            fillPercent={remainingPoolPercent}
+            text={`${remainingPool} AICs`}
+          />
         </div>
         <div className="user-grid" aria-label="Users contributing to the pool">
           {users.map((user) => {
             const consumed = user.consumptionPerStep * currentStep;
 
-            return (
-              <div className="user-consumption" key={user.name}>
-                <div className="user-card">
-                  <strong key={consumed}>{consumed} AICs</strong>
-                </div>
-                <span>{user.name}</span>
-              </div>
-            );
+            return <UserConsumption key={user.name} label={user.name} value={consumed} />;
           })}
         </div>
       </div>
-      <p className="prompt-message">{explanation}</p>
-      {currentStep < 3 ? (
-        <button
-          className="step-button"
-          type="button"
-          onClick={() => setCurrentStep((step) => Math.min(step + 1, 3))}
-        >
-          Next step
-        </button>
-      ) : null}
+      <PromptMessage>{explanation}</PromptMessage>
+      <StepButton
+        currentStep={currentStep}
+        maxStep={3}
+        onNext={() => setCurrentStep((step) => Math.min(step + 1, 3))}
+      />
     </>
   );
 }

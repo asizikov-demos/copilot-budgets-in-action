@@ -49,34 +49,23 @@ type SlideNavigationProps = {
   currentIndex: number;
 };
 
-function SlideNavigation({ currentIndex }: SlideNavigationProps) {
-  const previousSlide = slides[currentIndex - 1];
-  const nextSlide = slides[currentIndex + 1];
+function getPreviousSlideHash(currentIndex: number) {
+  return getSlideHash(slides[currentIndex - 1]?.slug ?? '');
+}
 
+function getNextSlideHash(currentIndex: number) {
+  return getSlideHash(slides[currentIndex + 1]?.slug ?? '');
+}
+
+function SlideNavigation({ currentIndex }: SlideNavigationProps) {
   return (
     <nav className="slide-navigation" aria-label="Tutorial slide navigation">
-      {previousSlide ? (
-        <a className="nav-button secondary" href={getSlideHash(previousSlide.slug)}>
-          <span>Back</span>
-          <strong>{previousSlide.name}</strong>
-        </a>
-      ) : (
-        <a className="nav-button secondary" href="#">
-          <span>Back</span>
-          <strong>Title</strong>
-        </a>
-      )}
-      {nextSlide ? (
-        <a className="nav-button primary" href={getSlideHash(nextSlide.slug)}>
-          <span>Next</span>
-          <strong>{nextSlide.name}</strong>
-        </a>
-      ) : (
-        <a className="nav-button primary" href="#">
-          <span>Finish</span>
-          <strong>Back to title</strong>
-        </a>
-      )}
+      <a className="nav-button secondary" href={getPreviousSlideHash(currentIndex)}>
+        {'← back'}
+      </a>
+      <a className="nav-button primary" href={getNextSlideHash(currentIndex)}>
+        {'next →'}
+      </a>
     </nav>
   );
 }
@@ -91,6 +80,29 @@ function StartButton() {
 
 function App() {
   const currentSlide = useCurrentSlide();
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+        return;
+      }
+
+      if (event.key === 'ArrowLeft' && currentSlide) {
+        event.preventDefault();
+        window.location.hash = getPreviousSlideHash(currentSlide.index);
+      }
+
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        window.location.hash = currentSlide
+          ? getNextSlideHash(currentSlide.index)
+          : getSlideHash(slides[0].slug);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentSlide]);
 
   return (
     <main

@@ -5,11 +5,8 @@ import { AdditionalUsageControlSlide } from './AdditionalUsageControlSlide';
 import { AiCreditsSlide } from './AiCreditsSlide';
 import { IncludedAiCreditsSlide } from './IncludedAiCreditsSlide';
 import { IncludedCreditsExhaustedSlide } from './IncludedCreditsExhaustedSlide';
-import { MonitorUsageSlide } from './MonitorUsageSlide';
 import { PoolConsumptionSlide } from './PoolConsumptionSlide';
 import { PoolLessonsSlide } from './PoolLessonsSlide';
-import { SetLimitsSlide } from './SetLimitsSlide';
-import { TakeActionSlide } from './TakeActionSlide';
 import { TokenConsumptionSlide } from './TokenConsumptionSlide';
 import type { TutorialSlide } from './types';
 
@@ -93,29 +90,5 @@ export const slides: TutorialSlide[] = [
     eyebrow: 'Hard stop example',
     title: 'Account budgets only stop additional usage',
     content: <AccountBudgetInteractionSlide />,
-  },
-  {
-    slug: 'set-limits',
-    name: 'Set limits',
-    number: 11,
-    eyebrow: 'Step 1',
-    title: 'Choose a budget before usage starts',
-    content: <SetLimitsSlide />,
-  },
-  {
-    slug: 'monitor-usage',
-    name: 'Monitor usage',
-    number: 12,
-    eyebrow: 'Step 2',
-    title: 'Watch usage while there is still time to adjust',
-    content: <MonitorUsageSlide />,
-  },
-  {
-    slug: 'take-action',
-    name: 'Take action',
-    number: 13,
-    eyebrow: 'Step 3',
-    title: 'Decide what happens when a budget needs attention',
-    content: <TakeActionSlide />,
   },
 ];

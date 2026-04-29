@@ -556,35 +556,36 @@ h2 {
 }
 
 .slide-navigation {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
 }
 
 .nav-button {
-  display: grid;
-  gap: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(4rem, 14vw, 9rem);
+  min-height: 100vh;
   padding: 1rem;
-  background: #ffffff;
-}
-
-.nav-button span {
-  color: #555555;
-  font-size: 0.8rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #000000;
   font-weight: 700;
-  text-transform: uppercase;
+  pointer-events: auto;
+  transition: background-color 160ms ease;
 }
 
-.nav-button strong {
-  color: #000000;
-}
-
-.nav-button.primary {
-  text-align: right;
-}
-
-.nav-button.primary strong {
-  color: #000000;
+.nav-button:hover {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: transparent;
+  box-shadow: none;
+  transform: none;
 }
 
 footer {
@@ -597,12 +598,14 @@ footer {
     padding: 1rem;
   }
 
-  .slide-navigation {
-    grid-template-columns: 1fr;
+  .slide {
+    margin-inline: 3.25rem;
   }
 
-  .nav-button.primary {
-    text-align: left;
+  .nav-button {
+    width: 3rem;
+    padding: 0.5rem;
+    writing-mode: vertical-rl;
   }
 
   .user-grid {
