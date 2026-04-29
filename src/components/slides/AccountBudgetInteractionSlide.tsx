@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Meter, PromptMessage, StepButton, UserConsumption } from '../ui';
 
 export function AccountBudgetInteractionSlide() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -41,40 +42,31 @@ export function AccountBudgetInteractionSlide() {
         </div>
         <div className="segmented-pool">
           <div className="segmented-pool-section">
-            <div className="pool-bar" aria-label={`${includedRemaining} included credits left`}>
-              <span className="pool-fill" style={{ width: `${includedFillPercent}%` }} />
-              <span className="pool-value">{includedRemaining} AICs left</span>
-            </div>
+            <Meter
+              ariaLabel={`${includedRemaining} included credits left`}
+              fillPercent={includedFillPercent}
+              text={`${includedRemaining} AICs left`}
+            />
           </div>
           <div className="segmented-pool-section">
-            <div
-              className="pool-bar"
-              aria-label={`${additionalUsage} AICs of additional usage budget used`}
-            >
-              <span className="pool-fill usage-fill" style={{ width: `${additionalFillPercent}%` }} />
-              <span className="pool-value">{additionalUsage} / 1000 AICs</span>
-            </div>
+            <Meter
+              ariaLabel={`${additionalUsage} AICs of additional usage budget used`}
+              fillPercent={additionalFillPercent}
+              text={`${additionalUsage} / 1000 AICs`}
+              variant="usage"
+            />
           </div>
         </div>
         <div className="user-grid single-user" aria-label="User consuming credits">
-          <div className="user-consumption">
-            <div className="user-card">
-              <strong key={actualConsumption}>{actualConsumption} AICs</strong>
-            </div>
-            <span>User A</span>
-          </div>
+          <UserConsumption label="User A" value={actualConsumption} />
         </div>
       </div>
-      <p className="prompt-message">{explanation}</p>
-      {currentStep < 3 ? (
-        <button
-          className="step-button"
-          type="button"
-          onClick={() => setCurrentStep((step) => Math.min(step + 1, 3))}
-        >
-          Next step
-        </button>
-      ) : null}
+      <PromptMessage>{explanation}</PromptMessage>
+      <StepButton
+        currentStep={currentStep}
+        maxStep={3}
+        onNext={() => setCurrentStep((step) => Math.min(step + 1, 3))}
+      />
     </>
   );
 }

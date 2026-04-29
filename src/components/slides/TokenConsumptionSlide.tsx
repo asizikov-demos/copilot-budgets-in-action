@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { AicCounter, Card, DataTable, PromptMessage, StepButton } from '../ui';
 
 export function TokenConsumptionSlide() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -103,39 +104,16 @@ export function TokenConsumptionSlide() {
 
   return (
     <>
-      <div className="interactive-card">
-        <span className="card-label">Model pricing per 1M tokens</span>
-        <table className="pricing-table">
-          <thead>
-            <tr>
-              <th>Model</th>
-              <th>Input</th>
-              <th>Cached input</th>
-              <th>Output</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>GPT-5.5</td>
-              <td>$5.00</td>
-              <td>$0.50</td>
-              <td>$30.00</td>
-            </tr>
-            <tr>
-              <td>GPT-5.4 mini</td>
-              <td>$0.75</td>
-              <td>$0.075</td>
-              <td>$4.50</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div className="aic-counter" aria-label={`Current AI Credits: ${currentAics}`}>
-        <span>AICs =</span>
-        <strong key={currentAics} className={hasReturnedResult ? 'counted' : undefined}>
-          {currentAics}
-        </strong>
-      </div>
+      <Card label="Model pricing per 1M tokens">
+        <DataTable
+          columns={['Model', 'Input', 'Cached input', 'Output']}
+          rows={[
+            ['GPT-5.5', '$5.00', '$0.50', '$30.00'],
+            ['GPT-5.4 mini', '$0.75', '$0.075', '$4.50'],
+          ]}
+        />
+      </Card>
+      <AicCounter value={currentAics} counted={hasReturnedResult} />
       <div className="token-visualization" aria-label="Token consumption by model">
         <div className="token-row">
           <span className="token-label">GPT-5.5</span>
@@ -189,16 +167,12 @@ export function TokenConsumptionSlide() {
           </div>
         </div>
       </div>
-      <p className="prompt-message">{promptMessage}</p>
-      {currentStep < 12 ? (
-        <button
-          className="step-button"
-          type="button"
-          onClick={() => setCurrentStep((step) => Math.min(step + 1, 12))}
-        >
-          Next step
-        </button>
-      ) : null}
+      <PromptMessage>{promptMessage}</PromptMessage>
+      <StepButton
+        currentStep={currentStep}
+        maxStep={12}
+        onNext={() => setCurrentStep((step) => Math.min(step + 1, 12))}
+      />
     </>
   );
 }

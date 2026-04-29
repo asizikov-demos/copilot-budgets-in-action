@@ -1,3 +1,5 @@
+import { Card } from '../ui';
+
 export function AccountBudgetHardStopSlide() {
   return (
     <>
@@ -5,9 +7,7 @@ export function AccountBudgetHardStopSlide() {
         An account-level budget can put a hard stop on additional usage, helping
         to control additional charges on top of the included credits.
       </p>
-      <div className="interactive-card">
-        <span className="card-label">GitHub Docs</span>
-        <strong>Manage budgets for an organization or enterprise</strong>
+      <Card label="GitHub Docs" title="Manage budgets for an organization or enterprise">
         <p>
           Learn how to set up budgets in GitHub:{' '}
           <a
@@ -18,7 +18,7 @@ export function AccountBudgetHardStopSlide() {
             Managing budgets for your organization or enterprise
           </a>
         </p>
-      </div>
+      </Card>
     </>
   );
 }

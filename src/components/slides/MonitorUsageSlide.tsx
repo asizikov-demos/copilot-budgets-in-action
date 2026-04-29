@@ -1,3 +1,5 @@
+import { BudgetMeter } from '../ui';
+
 export function MonitorUsageSlide() {
   return (
     <>
@@ -5,9 +7,7 @@ export function MonitorUsageSlide() {
         Usage trends are most useful before a limit is reached. Surface the
         current slide state, thresholds, and next action in one place.
       </p>
-      <div className="budget-meter warning" aria-label="Example monitored budget usage">
-        <span style={{ width: '72%' }} />
-      </div>
+      <BudgetMeter ariaLabel="Example monitored budget usage" percent={72} variant="warning" />
       <p className="hint">Example: 72% usage suggests the team should review.</p>
     </>
   );
