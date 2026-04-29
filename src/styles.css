@@ -26,6 +26,23 @@ a {
 }
 
 .page {
+  display: grid;
   min-height: 100vh;
+  grid-template-rows: 1fr auto;
+  place-items: center;
+  padding: 2rem;
   background: #ffffff;
+}
+
+h1 {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(2rem, 6vw, 5rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}
+
+footer {
+  color: #6a737d;
+  font-size: 0.875rem;
 }
